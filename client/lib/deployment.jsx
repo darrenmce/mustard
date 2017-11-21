@@ -3,7 +3,7 @@ const { Resources } = require('./components/resources');
 const { Container } = require('./components/container');
 const { Labels } = require('./components/labels');
 
-function Deployment({ deployment }) {
+function Deployment({ deployment, baseUrl }) {
   return (
     <div className="deployment">
       <div>{deployment.name}</div>
@@ -11,6 +11,10 @@ function Deployment({ deployment }) {
       <Labels labels={deployment.labels} />
       <Container container={deployment.container}/>
       <Resources resources={deployment.resources}/>
+      { deployment.deleted ?
+        <div>Deleting...</div> :
+        <a href={`${baseUrl}/delete/${deployment.labels.app}`}>Delete</a>
+      }
     </div>
   )
 }

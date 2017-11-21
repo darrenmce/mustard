@@ -21,7 +21,12 @@ const core = new Api.Core(k8sApiConfig);
 const ext = new Api.Extensions(k8sApiConfig);
 
 const k8s = createK8s(core, ext);
-const server = createServer({ k8s });
+const server = createServer({
+  k8s,
+  baseUrl: config.baseUrl,
+  sessionSecret: config.sessionSecret,
+  loginKey: config.loginKey
+});
 
 server.listen(config.port, () => {
   console.log(`${config.appName} running on port ${config.port}...`);
