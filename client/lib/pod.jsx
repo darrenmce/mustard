@@ -14,11 +14,9 @@ function Pod({ pod }) {
         </ul>
       </div>
       <div>
-        Container(s):
+        Container:
         <ul>
-          {pod.containers.map(container =>
-            <li key={container.image}>{`image: ${container.image}`}</li>
-          )}
+            <li>{`image: ${pod.container.image}`}</li>
         </ul>
       </div>
     </div>

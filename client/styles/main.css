@@ -1,5 +1,11 @@
+.pod, .deployment {
+    border: 1px solid black;
+    margin: 5px;
+}
+
 .pod {
     color: blue;
-    border: 1px solid blue;
-    margin: 5px;
+}
+.deployment {
+    color: darkgreen;
 }

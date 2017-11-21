@@ -6,15 +6,14 @@ function createClient(k8s) {
 
   async function getProps() {
     return {
-      pods: await k8s.listPods()
+      pods: await k8s.listPods(),
+      deployments: await k8s.listDeployments(),
     };
   }
 
   async function generateContent() {
     const props = await getProps();
-    return renderToString(
-      <Main {...props} />
-    );
+    return renderToString(React.createElement(Main, props, null));
   }
 
   return { generateContent };
