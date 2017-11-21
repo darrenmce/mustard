@@ -25,7 +25,8 @@ const server = createServer({
   k8s,
   baseUrl: config.baseUrl,
   sessionSecret: config.sessionSecret,
-  loginKey: config.loginKey
+  loginKey: config.loginKey,
+  domain: config.domain,
 });
 
 server.listen(config.port, () => {
