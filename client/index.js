@@ -4,10 +4,16 @@ const { Main } = require('./lib/main');
 
 function createClient(k8s) {
 
+  async function getProps() {
+    return {
+      pods: await k8s.listPods()
+    };
+  }
+
   async function generateContent() {
-    const pods = await k8s.listPods();
+    const props = await getProps();
     return renderToString(
-      <Main pods={pods} />
+      <Main {...props} />
     );
   }
 

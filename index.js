@@ -1,27 +1,28 @@
-
 require('babel-core/register')({
   presets: ['react']
 });
 
 const Api = require('kubernetes-client');
+
+const config = require('./config');
 const { createServer } = require('./lib/server.js');
 const { createK8s } = require('./lib/k8s');
 
-let core;
-if (process.env.DEV_MODE) {
-  core = require('./mocks/mock-core');
+let apiConfig;
+if (config.useKubeConfig) {
+  apiConfig = Api.config.fromKubeconfig();
 } else {
-  const apiConfig = Api.config.getInCluster();
-  core = new Api.Core({
-    ...apiConfig,
-    promises: true,
-  });
+  apiConfig = Api.config.getInCluster();
 }
 
-const k8s = createK8s(core);
+const core = new Api.Core({
+  ...apiConfig,
+  ...config.k8s,
+});
 
+const k8s = createK8s(core);
 const server = createServer({ k8s });
 
-server.listen(process.env.PORT || 8080, () => {
-  console.log('mustard up and running...');
+server.listen(config.port, () => {
+  console.log(`${config.appName} running on port ${config.port}...`);
 });
